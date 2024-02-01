@@ -7,12 +7,12 @@ public class GameManager : MonoBehaviour
 {
     private GameObject selectedLauncher;
     [SerializeField] private GameObject catapult, swing, slingshot;
-
+    private GameObject loadSlider;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        loadSlider = GameObject.Find("LoadSlider");
     }
 
     // Update is called once per frame
@@ -42,5 +42,11 @@ public class GameManager : MonoBehaviour
         }
         selectedLauncher = newLauncher;
         selectedLauncher.SetActive(true);
+    }
+
+    public void ResetButtonPushed()
+    {
+        selectedLauncher.GetComponent<Launcher>().ResetLauncher();
+        loadSlider.GetComponent<Slider>().value = 0.0f;
     }
 }
