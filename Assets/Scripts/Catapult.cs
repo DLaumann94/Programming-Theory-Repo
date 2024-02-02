@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Catapult : Launcher
+public class Catapult : Launcher // INHERITANCE
 {
     private float minAngle = -90f;
     private float maxAngle = 0f;
@@ -25,16 +25,14 @@ public class Catapult : Launcher
         LimitRotation();
     }
 
-    public override void SetLoad(float load)
+    public override void SetLoad() // POLYMORPHISM
     {
-        float angle = (maxAngle-minAngle) * load + minAngle;
+        float angle = (maxAngle-minAngle) * currentLoad + minAngle;
         rotationCenter.rotation = Quaternion.Euler(0,0, angle);
         launchSpeed = -(angle-minAngle)/launchTime;
     }
 
-
-
-    private void LimitRotation()
+    private void LimitRotation() // ABSTRACTION
     {
         float currentAngle = rotationCenter.rotation.eulerAngles.z;
         if (currentAngle > 180)

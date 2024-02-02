@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Swing : Launcher
+public class Swing : Launcher // INHERITANCE
 {
     private float minAngle = 0f;
     private float maxAngle = -90f;
@@ -26,16 +26,14 @@ public class Swing : Launcher
         LimitRotation();
     }
 
-    public override void SetLoad(float load)
+    public override void SetLoad() // POLYMORPHISM
     {
-        float angle = (maxAngle - minAngle) * load + minAngle;
+        float angle = (maxAngle - minAngle) * currentLoad + minAngle;
         rotationCenter.rotation = Quaternion.Euler(0, 0, angle);
         launchSpeed = -(angle - minAngle) / launchTime;
     }
 
-
-
-    private void LimitRotation()
+    private void LimitRotation() // ABSTRACTION
     {
         float currentAngle = rotationCenter.rotation.eulerAngles.z;
         if (currentAngle > 180)

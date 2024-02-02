@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public void SelectLauncher(int selection)
+    public void SelectLauncher(int selection) // ABSTRACTION
     {
         loadSlider.GetComponent<Slider>().interactable = true;
         loadSlider.GetComponent<Slider>().value = 0.0f;
@@ -31,15 +31,15 @@ public class GameManager : MonoBehaviour
         switch (launcherID)
         {
             case 0:
-                SetLauncher(catapult); break;
+                ChangeLauncher(catapult); break;
             case 1:
-                SetLauncher(swing); break;
+                ChangeLauncher(swing); break;
             case 2:
-                SetLauncher(slingshot); break;
+                ChangeLauncher(slingshot); break;
         }
     }
 
-    private void SetLauncher(GameObject newLauncher)
+    private void ChangeLauncher(GameObject newLauncher) // ABSTRACTION
     {
         if (selectedLauncher != null)
         {
@@ -48,14 +48,15 @@ public class GameManager : MonoBehaviour
         selectedLauncher = Instantiate(newLauncher);
     }
 
-    public void ResetButtonPushed()
+    public void ResetButtonPushed() // ABSTRACTION
     {
         SelectLauncher(launcherID);
     }
 
-    public void LoadSliderChanged(float value)
+    public void LoadSliderChanged(float value) // ABSTRACTION
     {
-        selectedLauncher.GetComponent<Launcher>().SetLoad(value);
+        selectedLauncher.GetComponent<Launcher>().currentLoad = value;
+        selectedLauncher.GetComponent<Launcher>().SetLoad();
     }
 
     public void ReleaseButtonPushed()

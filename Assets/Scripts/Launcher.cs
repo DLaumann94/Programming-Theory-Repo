@@ -3,9 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class Launcher : MonoBehaviour
+public abstract class Launcher : MonoBehaviour // INHERITANCE
 {
-    protected float currentLoad;
+    protected float m_currentLoad;
+    public float currentLoad // ENCAPSULATION
+    {
+        get { return m_currentLoad; }
+        set {
+            if (value > 1)
+                m_currentLoad = 1;
+            else if (value < 0)
+                m_currentLoad = 0;
+            else
+                m_currentLoad = value;
+        }
+    }
     protected bool isLaunching = false;
     private bool isProjectileReleased = false;
     public GameObject projectileSpot;
@@ -25,9 +37,9 @@ public abstract class Launcher : MonoBehaviour
         }
     }
 
-    public abstract void SetLoad(float loadValue);
+    public abstract void SetLoad(); // POLYMORPHISM // ABSTRACTION
 
-    public virtual void LaunchProjectile()
+    public virtual void LaunchProjectile() // POLYMORPHISM // ABSTRACTION
     {
         isLaunching = true;
         isProjectileReleased = true;

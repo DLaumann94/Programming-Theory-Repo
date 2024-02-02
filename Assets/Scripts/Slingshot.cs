@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Slingshot : Launcher
+public class Slingshot : Launcher // INHERITANCE
 {
     private float minPos = 0f;
     private float maxPos = -2f;
@@ -24,16 +24,14 @@ public class Slingshot : Launcher
         LimitPosition();
     }
 
-    public override void SetLoad(float load)
+    public override void SetLoad() // POLYMORPHISM
     {
-        float position = (maxPos - minPos) * load + minPos;
+        float position = (maxPos - minPos) * currentLoad + minPos;
         box.localPosition = new Vector3(position, box.localPosition.y, box.localPosition.z);
         launchSpeed = -(position - minPos) / launchTime;
     }
 
-
-
-    private void LimitPosition()
+    private void LimitPosition() // ABSTRACTION
     {
         if (box.localPosition.x > minPos)
         {
