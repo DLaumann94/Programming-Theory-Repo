@@ -8,11 +8,13 @@ public class GameManager : MonoBehaviour
     private GameObject selectedLauncher;
     [SerializeField] private GameObject catapult, swing, slingshot;
     private GameObject loadSlider;
+    private int launcherID = 0;
 
     // Start is called before the first frame update
     void Start()
     {
         loadSlider = GameObject.Find("LoadSlider");
+        SelectLauncher(launcherID);
     }
 
     // Update is called once per frame
@@ -23,7 +25,8 @@ public class GameManager : MonoBehaviour
 
     public void SelectLauncher(int selection)
     {
-        switch (selection)
+        launcherID = selection;
+        switch (launcherID)
         {
             case 0:
                 SetLauncher(catapult); break;
@@ -38,15 +41,24 @@ public class GameManager : MonoBehaviour
     {
         if (selectedLauncher != null)
         {
-            selectedLauncher.SetActive(false);
+            Destroy(selectedLauncher);
         }
-        selectedLauncher = newLauncher;
-        selectedLauncher.SetActive(true);
+        selectedLauncher = Instantiate(newLauncher);
     }
 
     public void ResetButtonPushed()
     {
-        selectedLauncher.GetComponent<Launcher>().ResetLauncher();
         loadSlider.GetComponent<Slider>().value = 0.0f;
+        SelectLauncher(launcherID);
+    }
+
+    public void LoadSliderChanged(float value)
+    {
+        selectedLauncher.GetComponent<Launcher>().SetLoad(value);
+    }
+
+    public void ReleaseButtonPushed()
+    {
+        selectedLauncher.GetComponent<Launcher>().LaunchProjectile();
     }
 }

@@ -7,21 +7,21 @@ public abstract class Launcher : MonoBehaviour
 {
     protected float currentLoad;
     protected bool isLaunching = false;
+    private bool isProjectileReleased = false;
     public GameObject projectileSpot;
     protected GameObject projectile;
 
-    // Start is called before the first frame update
-    void Start()
+    protected void BaseStart()
     {
         projectile = GameObject.Find("Ball");
     }
 
-    // Update is called once per frame
-    void Update()
+    protected void BaseUpdate()
     {
-        if (!isLaunching)
+        if (!isProjectileReleased)
         {
             projectile.transform.position = projectileSpot.transform.position;
+            projectile.GetComponent<Rigidbody>().velocity = Vector3.zero;
         }
     }
 
@@ -30,12 +30,6 @@ public abstract class Launcher : MonoBehaviour
     public virtual void LaunchProjectile()
     {
         isLaunching = true;
-    }
-
-    public void ResetLauncher()
-    {
-        isLaunching = false;
-        SetLoad(0);
-        projectile.transform.position = projectileSpot.transform.position;
+        isProjectileReleased = true;
     }
 }
