@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Catapult : Launcher
+public class Swing : Launcher
 {
-    private float minAngle = -90f;
-    private float maxAngle = 0f;
+    private float minAngle = 0f;
+    private float maxAngle = -90f;
     private Transform rotationCenter;
     private float launchTime = 0.1f;
     private float launchSpeed = 0f;
+    private float overshootAngle = 10f;
 
     // Start is called before the first frame update
     void Start()
@@ -27,9 +28,9 @@ public class Catapult : Launcher
 
     public override void SetLoad(float load)
     {
-        float angle = (maxAngle-minAngle) * load + minAngle;
-        rotationCenter.rotation = Quaternion.Euler(0,0, angle);
-        launchSpeed = -(angle-minAngle)/launchTime;
+        float angle = (maxAngle - minAngle) * load + minAngle;
+        rotationCenter.rotation = Quaternion.Euler(0, 0, angle);
+        launchSpeed = -(angle - minAngle) / launchTime;
     }
 
 
@@ -41,10 +42,9 @@ public class Catapult : Launcher
         {
             currentAngle = currentAngle - 360;
         }
-        if (currentAngle < minAngle)
+        if (currentAngle > minAngle+overshootAngle)
         {
             rotationCenter.GetComponentInParent<Rigidbody>().angularVelocity = new Vector3(0, 0, 0);
-            rotationCenter.rotation = Quaternion.Euler(0, 0, minAngle);
             isLaunching = false;
         }
         else if (isLaunching)

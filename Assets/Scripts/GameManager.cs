@@ -25,6 +25,8 @@ public class GameManager : MonoBehaviour
 
     public void SelectLauncher(int selection)
     {
+        loadSlider.GetComponent<Slider>().interactable = true;
+        loadSlider.GetComponent<Slider>().value = 0.0f;
         launcherID = selection;
         switch (launcherID)
         {
@@ -48,7 +50,6 @@ public class GameManager : MonoBehaviour
 
     public void ResetButtonPushed()
     {
-        loadSlider.GetComponent<Slider>().value = 0.0f;
         SelectLauncher(launcherID);
     }
 
@@ -59,6 +60,7 @@ public class GameManager : MonoBehaviour
 
     public void ReleaseButtonPushed()
     {
+        loadSlider.GetComponent<Slider>().interactable = false;
         selectedLauncher.GetComponent<Launcher>().LaunchProjectile();
     }
 }
